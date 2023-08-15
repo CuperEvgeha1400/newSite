@@ -5,22 +5,14 @@ from rest_framework.permissions import AllowAny
 from .models import ChipsBasket, BasketItem
 from .serializers import ChipsBasketSerializer, BasketItemSerializer
 
+
 @permission_classes([AllowAny])
-class ChipsBasketListCreateView(generics.ListCreateAPIView):
+class ChipsBasketListCreateView(generics.ListAPIView):
     queryset = ChipsBasket.objects.all()
     serializer_class = ChipsBasketSerializer
 
-@permission_classes([AllowAny])
-class ChipsBasketDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ChipsBasket.objects.all()
-    serializer_class = ChipsBasketSerializer
 
 @permission_classes([AllowAny])
-class BasketItemListCreateView(generics.ListCreateAPIView):
-    queryset = BasketItem.objects.all()
-    serializer_class = BasketItemSerializer
-
-@permission_classes([AllowAny])
-class BasketItemDetailView(generics.RetrieveUpdateDestroyAPIView):
+class BasketItemListCreateView(generics.ListAPIView):
     queryset = BasketItem.objects.all()
     serializer_class = BasketItemSerializer

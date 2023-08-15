@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from authemail.admin import EmailUserAdmin
+from .models import MyUser
 
 class MyUserAdmin(EmailUserAdmin):
 	fieldsets = (
