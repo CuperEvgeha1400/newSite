@@ -1,54 +1,23 @@
-from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-from account.models import MyUser
+from django.utils import timezone
+from .models import UserPayment
 from ChipBasket.models import BasketItem
+from product.models import BaseProduct
+from promocode.models import PromoCode
 import stripe
 import time
-from product.models import BaseProduct
-from .models import PromoCode
-from django.core.exceptions import ValidationError
-from django.utils import timezone
+
+from account.models import MyUser
 
 
-@login_required(login_url='login')
-def product_page(request):
-    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-    if request.method == 'POST':
-        promo_code = request.POST.get('promo_code')
-        user_basket = BasketItem.objects.filter(user=request.user)
-        basket_total = sum(item.subtotal() for item in user_basket)
-
-        try:
-            discount_amount = apply_promo_code(promo_code, basket_total)
-            final_total = basket_total - discount_amount
-        except ValidationError as e:
-            final_total = basket_total
-            error_message = str(e)
-
-        line_items = []
-        for basket_item in user_basket:
-            product = basket_item.product
-            item = {
-                'name': product.Model,
-                'price': int(product.price * (1 - discount_percentage / 100)),
-                'quantity': basket_item.quantity,
-            }
-            line_items.append(item)
-
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=line_items,  # Используем список элементов
-            mode='payment',
-            customer_creation='always',
-            success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
-        )
-        return redirect(checkout_session.url, code=303)
-
-    return render(request, 'user_payment/product_page.html')
+def increment_promo_usage(promo_code):
+    promo = PromoCode.objects.get(code=promo_code)
+    promo.increment_used_count()
 
 
 def apply_promo_code(promo_code, basket_total):
@@ -65,14 +34,47 @@ def apply_promo_code(promo_code, basket_total):
         raise ValidationError("Invalid promo code.")
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_checkout_session(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    promo_code = request.data.get('promo_code')
+    user_basket = MyUser.objects.filter(chips_basket=request.user)
+    basket_total = sum(item.subtotal() for item in user_basket)
+
+    try:
+        discount_amount = apply_promo_code(promo_code, basket_total)
+        final_total = basket_total - discount_amount
+    except ValidationError as e:
+        final_total = basket_total
+        error_message = str(e)
+
+    line_items = []
+    for basket_item in user_basket:
+        product = basket_item.product
+        item = {
+            'name': product.Model,
+            'price': int(final_total),
+            'quantity': basket_item.quantity,
+        }
+        line_items.append(item)
+
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=line_items,
+        mode='payment',
+        customer_creation='always',
+        success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
+    )
+
+    return Response({'url': checkout_session.url}, status=status.HTTP_200_OK)
 
 
-def increment_promo_usage(promo_code):
-    promo = PromoCode.objects.get(code=promo_code)
-    promo.increment_used_count()
+# Define apply_promo_code, payment_successful, payment_cancelled, increment_promo_usage functions here
 
-
-@csrf_exempt
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def stripe_webhook(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     time.sleep(10)
@@ -84,19 +86,20 @@ def stripe_webhook(request):
             payload, signature_header, settings.STRIPE_WEBHOOK_SECRET_TEST
         )
     except ValueError as e:
-        return HttpResponse(status=400)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     except stripe.error.SignatureVerificationError as e:
-        return HttpResponse(status=400)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         session_id = session.get('id', None)
         time.sleep(15)
         user_payment = MyUser.objects.get(stripe_checkout_id=session_id)
 
-        # Увеличение счетчика использования промокода
         if user_payment.promo_code:
             increment_promo_usage(user_payment.promo_code)
 
         user_payment.payment_bool = True
         user_payment.save()
-    return HttpResponse(status=200)
+
+    return Response(status=status.HTTP_200_OK)

@@ -1,11 +1,10 @@
 from django.db import models
 from django.utils import timezone
-
+import datetime
 from product.models import BaseProduct
 
 class ChipsBasket(models.Model):
-    date = models.DateField(default=timezone.now)
-
+    date = models.DateField(default=datetime.date.today)
 
 class BasketItem(models.Model):
     basket = models.ForeignKey(ChipsBasket, on_delete=models.CASCADE)

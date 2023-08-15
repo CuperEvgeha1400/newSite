@@ -2,26 +2,17 @@ from rest_framework import generics
 from .models import ParameterStorage, BaseProduct, ValueStorage
 from .serializers import ParameterStorageSerializer, BaseProductSerializer, ValueStorageSerializer
 
-class ParameterStorageListCreateView(generics.ListCreateAPIView):
+
+class ParameterStorageListCreateView(generics.ListAPIView):
     queryset = ParameterStorage.objects.all()
     serializer_class = ParameterStorageSerializer
 
-class ParameterStorageDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ParameterStorage.objects.all()
-    serializer_class = ParameterStorageSerializer
 
-class BaseProductListCreateView(generics.ListCreateAPIView):
+class BaseProductListCreateView(generics.ListAPIView):
     queryset = BaseProduct.objects.all()
     serializer_class = BaseProductSerializer
 
-class BaseProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BaseProduct.objects.all()
-    serializer_class = BaseProductSerializer
 
-class ValueStorageListCreateView(generics.ListCreateAPIView):
-    queryset = ValueStorage.objects.all()
-    serializer_class = ValueStorageSerializer
-
-class ValueStorageDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ValueStorageListCreateView(generics.ListAPIView):
     queryset = ValueStorage.objects.all()
     serializer_class = ValueStorageSerializer
