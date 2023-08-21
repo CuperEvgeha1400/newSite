@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'payment',
 ]
 
-STRIPE_SECRET_KEY_TEST = os.getenv("STRIPE_SECRET_KEY_TEST")
+STRIPE_SECRET_KEY_TEST = "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"
 
 AUTH_USER_MODEL = 'account.MyUser'
 
@@ -138,3 +138,4 @@ STATIC_URL += '/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
