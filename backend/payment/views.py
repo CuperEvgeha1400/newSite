@@ -20,13 +20,18 @@ def increment_promo_usage(promo_code):
     promo.increment_used_count()
 
 
-def apply_promo_code(promo_code, basket_total):
+def apply_promo_code(promo_code, basket_items):
+    price = 0
+    for item in basket_items:
+        price += basket_items[item].product.price * basket_items[item].quantity
+
+
     try:
         promo = PromoCode.objects.get(code=promo_code)
         now = timezone.now()
 
         if promo.valid_from <= now <= promo.valid_until and promo.used_count < promo.max_usage:
-            discount_amount = basket_total * promo.discount_percentage / 100
+            discount_amount = price * promo.discount_percentage / 100
             return discount_amount
         else:
             raise ValidationError("Invalid or expired promo code.")
@@ -37,32 +42,40 @@ def apply_promo_code(promo_code, basket_total):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_checkout_session(request):
-    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-    promo_code = request.data.get('promo_code')
-    user_basket = MyUser.objects.filter(chips_basket=request.user)
-    basket_total = sum(item.subtotal() for item in user_basket)
 
-    try:
-        discount_amount = apply_promo_code(promo_code, basket_total)
-        final_total = basket_total - discount_amount
-    except ValidationError as e:
-        final_total = basket_total
-        error_message = str(e)
+    promocode = request.data.get("promocode")
+
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    user_basket = request.user.chips_basket
+
+    if user_basket:
+        basket_items = BasketItem.objects.filter(basket=user_basket)
+
+    else:
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     line_items = []
-    for basket_item in user_basket:
-        product = basket_item.product
+
+    for item in range(len(basket_items)):
+        name = basket_items[item].product
+        currency = 'czk'
+        price = basket_items[item].product.price
         item = {
-            'name': product.Model,
-            'price': int(final_total),
-            'quantity': basket_item.quantity,
+            'price_data':{
+                'currency' : currency,
+                'unit_amount':price*100,
+                'product_data':{
+                    'name':name
+                }
+            },
+            'quantity': basket_items[item].quantity,
         }
         line_items.append(item)
-
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=line_items,
         mode='payment',
+        allow_promotion_codes= True,
         customer_creation='always',
         success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
         cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
@@ -76,6 +89,7 @@ def create_checkout_session(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def stripe_webhook(request):
+
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     time.sleep(10)
     payload = request.body
@@ -103,3 +117,5 @@ def stripe_webhook(request):
         user_payment.save()
 
     return Response(status=status.HTTP_200_OK)
+
+

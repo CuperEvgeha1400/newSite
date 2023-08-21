@@ -26,4 +26,6 @@ urlpatterns = [
     path('api/', include('product.urls')),
     path('api/', include('reviews.urls')),
     path('api/', include('payment.urls')),
+    path('api/', include('account.urls')),
+    path('api/', include('promocode.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
