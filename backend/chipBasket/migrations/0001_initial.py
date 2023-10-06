@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.PositiveIntegerField(default=1)),
-                ('basket', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ChipBasket.chipsbasket')),
+                ('basket', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='chipBasket.chipsbasket')),
                 ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='product.baseproduct')),
             ],
         ),

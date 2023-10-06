@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 from django.utils import timezone
 from .models import UserPayment
-from ChipBasket.models import BasketItem
+from chipBasket.models import BasketItem
 from product.models import BaseProduct
 from promocode.models import PromoCode
 import stripe

@@ -29,3 +29,7 @@ def create_stripe_promo_code(sender, instance, created, **kwargs):
             code=instance.code,
             coupon=coupon
         )
+
+@receiver(post_save, sender=PromoCode)
+def deletePromoCode(sender, instance, deleted, **kwargs):
+    pass

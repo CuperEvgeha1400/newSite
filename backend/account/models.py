@@ -1,7 +1,7 @@
 from django.db import models
 from authemail.models import EmailUserManager, EmailAbstractUser
 
-from ChipBasket.models import ChipsBasket
+from chipBasket.models import ChipsBasket
 
 
 class MyUser(EmailAbstractUser):

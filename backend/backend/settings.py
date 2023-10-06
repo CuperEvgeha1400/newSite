@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'ChipBasket',
+    'chipBasket',
     'order',
     'product',
     'reviews',
@@ -136,6 +136,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 STATIC_URL += '/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+EMAIL_FROM = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_FROM') or 'novapiple228@gmail.com'
+EMAIL_BCC = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_BCC') or 'novapiple228@gmail.com'
+
+EMAIL_HOST = os.environ.get('AUTHEMAIL_EMAIL_HOST') or 'smtp.gmail.com'
+EMAIL_PORT = os.environ.get('AUTHEMAIL_EMAIL_PORT') or 587
+EMAIL_HOST_USER = os.environ.get('AUTHEMAIL_EMAIL_HOST_USER') or 'novapiple228@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('AUTHEMAIL_EMAIL_HOST_PASSWORD') or 'hiym azto ehqc spfk '
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
