@@ -1,27 +1,30 @@
+import base64
 import uuid
-
+import os
+from backend.settings import REDIRECT_DOMAIN
+import requests
 from django.http import JsonResponse
-from paypal.standard.forms import PayPalPaymentsForm
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from django.conf import settings
 from django.utils import timezone
-from .models import UserPayment
 from chipBasket.models import BasketItem
 from product.models import BaseProduct
 from promocode.models import PromoCode
 import stripe
 import time
-from paypalrestsdk import Payment
 from account.models import MyUser
 from django.shortcuts import reverse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.conf import settings
+from rest_framework.views import APIView
+from order.models import Order
+
+
+clientID = os.environ.get("clientID")
+clientSecret = os.environ.get("clientSecret")
+
 
 def increment_promo_usage(promo_code):
     promo = PromoCode.objects.get(code=promo_code)
@@ -53,7 +56,7 @@ def create_checkout_session(request):
 
     promocode = request.data.get("promocode")
 
-    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    stripe.api_key = os.environ.get("STRIPE_SECRET_KEY_TEST")
     user_basket = request.user.chips_basket
 
     if user_basket:
@@ -92,8 +95,6 @@ def create_checkout_session(request):
     return Response({'url': checkout_session.url}, status=status.HTTP_200_OK)
 
 
-# Define apply_promo_code, payment_successful, payment_cancelled, increment_promo_usage functions here
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def stripe_webhook(request):
@@ -127,46 +128,89 @@ def stripe_webhook(request):
     return Response(status=status.HTTP_200_OK)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def CheckOut(request):
-    user_basket = request.user.chips_basket
+def PaypalToken(client_ID, client_Secret):
 
-    if user_basket:
-        basket_items = BasketItem.objects.filter(basket=user_basket)
-    else:
-        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    url = "https://api-m.sandbox.paypal.com/v1/oauth2/token"
 
-    line_items = []
+    data = {
+                "client_id":client_ID,
+                "client_secret":client_Secret,
+                "grant_type":"client_credentials"
+            }
+    headers = {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Basic {0}".format(base64.b64encode((client_ID + ":" + client_Secret).encode()).decode())
+            }
 
-    host = request.get_host()
+    token = requests.post(url, data, headers=headers)
+    print(token)
+    return token.json()['access_token']
 
-    for item in basket_items:
-        price = item.product.price
-        name = item.product
-        paypal_checkout = {
-            'business': settings.PAYPAL_RECEIVER_EMAIL,
-            'amount': price,
-            'item_name': name,
-            'invoice': uuid.uuid4(),
-            'currency_code': 'czk',
-            'notify_url': f"http://{host}{reverse('paypal-ipn')}",
-            'return_url': f"http://{host}{reverse('payment-success')}",
-            'cancel_url': f"http://{host}{reverse('payment-failed')}",
+class CreateOrderViewRemote(APIView):
+    def get(self, request):
+        url = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
+        token = PaypalToken(clientID, clientSecret)
+        user_basket = request.user.chips_basket
+        if user_basket:
+            basket_items = BasketItem.objects.filter(basket=user_basket)
+
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        items = []
+        total_price = 0
+        for item in range(len(basket_items)):
+            name = basket_items[item].product.Model
+            currency = 'czk'
+            price = basket_items[item].product.price
+            item = {
+                "name" : name,
+                "quantity" : basket_items[item].quantity,
+                "unit_amount" : {
+                    "currency_code" : "CZK",
+                    "value" : price
+                }
+
+            }
+            total_price += price
+            items.append(item)
+
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+token
         }
-        line_items.append(paypal_checkout)
 
-    # Calculate the total price here based on line_items
-    total_price = sum(float(item['amount']) for item in line_items)
+        json_data = {
+            "intent": "CAPTURE",
 
-    # Generate a ready-made PayPal payment link
-    paypal_url = f"https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&charset=utf-8&currency_code=czk&no_shipping=1&business={settings.PAYPAL_RECEIVER_EMAIL}&amount={total_price}&item_name=Your item name&invoice={uuid.uuid4()}&notify_url=http://{host}{reverse('paypal-ipn')}&return=http://{host}{reverse('payment-success')}&cancel_return=http://{host}{reverse('payment-failed')}"
-    # Возвращаем готовую ссылку на оплату PayPal в виде JSON-ответа
-        
-    return JsonResponse({'paypal_payment_link': paypal_url})
+            "application_context": {
+                "return_url": REDIRECT_DOMAIN,
+                "cancel_url": REDIRECT_DOMAIN,
+            },
+            "purchase_units": [
+                {
+                    'reference_id': "default",
+                    "amount": {
+                        "currency_code": "CZK",
+                        "value": f"{total_price}",
+                        "breakdown" : {
+                            "item_total": {
+                                "currency_code": "CZK",
+                                "value": f"{total_price}",}
 
-def PaymentSuccessful(request):
-    return Response(request, status=status.HTTP_200_OK)
+                        }
 
-def paymentFailed(request):
-    return Response(request, status=status.HTTP_400_BAD_REQUEST)
+                    },
+                    "items": items,
+                    "payment_instruction": {
+                        "disbursement_mode": "INSTANT",
+                    },
+                    "payment_capture": {
+                        "payment_mode": "INSTANT_CAPTURE",
+                    }
+                }
+            ]
+        }
+
+        response = requests.post(url, json=json_data, headers=headers)
+        linkForPayment = response.json()['links'][1]['href']
+        return Response(linkForPayment)

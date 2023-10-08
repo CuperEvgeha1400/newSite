@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'RegisterLogin',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -48,10 +47,8 @@ INSTALLED_APPS = [
     'account',
     'promocode',
     'payment',
-    'paypal.standard.ipn',
 ]
 PAYPAL_RECEIVER_EMAIL = 'novapiple228@gmail.com'
-STRIPE_SECRET_KEY_TEST = "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"
 
 AUTH_USER_MODEL = 'account.MyUser'
 

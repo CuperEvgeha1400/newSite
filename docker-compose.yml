@@ -46,6 +46,7 @@ services:
       - postgres_db
     env_file:
       - envs/database.env
+      - envs/backend.env
     restart:
       on-failure
     networks:

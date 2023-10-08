@@ -29,6 +29,4 @@ urlpatterns = [
     path('api/', include('payment.urls')),
     path('api/', include('account.urls')),
     path('api/', include('promocode.urls')),
-    path('paypal/', include('paypal.standard.ipn.urls')),
-    path('', include('RegisterLogin.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
