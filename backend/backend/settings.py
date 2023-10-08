@@ -26,6 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+PAYPAL_TEST = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,8 +48,9 @@ INSTALLED_APPS = [
     'account',
     'promocode',
     'payment',
+    'paypal.standard.ipn',
 ]
-
+PAYPAL_RECEIVER_EMAIL = 'novapiple228@gmail.com'
 STRIPE_SECRET_KEY_TEST = "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"
 
 AUTH_USER_MODEL = 'account.MyUser'

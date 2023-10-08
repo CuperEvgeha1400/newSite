@@ -9,6 +9,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = '__all__'
+        depth = 2
+
 
 class OrderSerializer(serializers.ModelSerializer):
     status = OrderStatusSerializer(source='get_status_display', read_only=True)

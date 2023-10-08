@@ -1,3 +1,7 @@
+import uuid
+
+from django.http import JsonResponse
+from paypal.standard.forms import PayPalPaymentsForm
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -11,9 +15,13 @@ from product.models import BaseProduct
 from promocode.models import PromoCode
 import stripe
 import time
-
+from paypalrestsdk import Payment
 from account.models import MyUser
-
+from django.shortcuts import reverse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.conf import settings
 
 def increment_promo_usage(promo_code):
     promo = PromoCode.objects.get(code=promo_code)
@@ -119,3 +127,46 @@ def stripe_webhook(request):
     return Response(status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def CheckOut(request):
+    user_basket = request.user.chips_basket
+
+    if user_basket:
+        basket_items = BasketItem.objects.filter(basket=user_basket)
+    else:
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    line_items = []
+
+    host = request.get_host()
+
+    for item in basket_items:
+        price = item.product.price
+        name = item.product
+        paypal_checkout = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': price,
+            'item_name': name,
+            'invoice': uuid.uuid4(),
+            'currency_code': 'czk',
+            'notify_url': f"http://{host}{reverse('paypal-ipn')}",
+            'return_url': f"http://{host}{reverse('payment-success')}",
+            'cancel_url': f"http://{host}{reverse('payment-failed')}",
+        }
+        line_items.append(paypal_checkout)
+
+    # Calculate the total price here based on line_items
+    total_price = sum(float(item['amount']) for item in line_items)
+
+    # Generate a ready-made PayPal payment link
+    paypal_url = f"https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&charset=utf-8&currency_code=czk&no_shipping=1&business={settings.PAYPAL_RECEIVER_EMAIL}&amount={total_price}&item_name=Your item name&invoice={uuid.uuid4()}&notify_url=http://{host}{reverse('paypal-ipn')}&return=http://{host}{reverse('payment-success')}&cancel_return=http://{host}{reverse('payment-failed')}"
+    # Возвращаем готовую ссылку на оплату PayPal в виде JSON-ответа
+        
+    return JsonResponse({'paypal_payment_link': paypal_url})
+
+def PaymentSuccessful(request):
+    return Response(request, status=status.HTTP_200_OK)
+
+def paymentFailed(request):
+    return Response(request, status=status.HTTP_400_BAD_REQUEST)

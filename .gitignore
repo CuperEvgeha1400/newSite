@@ -1,0 +1,9 @@
+/backend/promocode/migrations/
+/backend/product/migrations/
+/backend/RegisterLogin/migrations/
+/backend/reviews/migrations/
+/backend/payment/migrations/
+/backend/order/migrations/
+/backend/chipBasket/migrations/
+/backend/account/migrations/
+/backend/db.sqlite3

@@ -19,7 +19,7 @@ class BaseProduct(models.Model):
     image = models.ImageField(blank=True, null=True)
     Model = models.TextField()
     ProductDescription = models.TextField()
-    parameters = models.ManyToManyField(ParameterStorage, related_name='base_products')
+    parameters = models.ManyToManyField(ValueStorage, related_name='base_products')
     price = models.IntegerField()
 
     def __str__(self):
