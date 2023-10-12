@@ -2,13 +2,13 @@ from rest_framework import generics
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 
-from .models import ChipsBasket, BasketItem
+from .models import ChipBasket, BasketItem
 from .serializers import ChipsBasketSerializer, BasketItemSerializer
 
 
 @permission_classes([AllowAny])
 class ChipsBasketListCreateView(generics.ListAPIView):
-    queryset = ChipsBasket.objects.all()
+    queryset = ChipBasket.objects.all()
     serializer_class = ChipsBasketSerializer
 
 

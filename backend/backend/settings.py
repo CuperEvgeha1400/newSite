@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 ]
 PAYPAL_RECEIVER_EMAIL = 'novapiple228@gmail.com'
 
-AUTH_USER_MODEL = 'account.MyUser'
+AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

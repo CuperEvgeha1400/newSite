@@ -2,14 +2,28 @@ from django.db import models
 from django.utils import timezone
 import datetime
 from product.models import BaseProduct
+from django.contrib.auth import get_user_model
 
-class ChipsBasket(models.Model):
+
+class ChipBasket(models.Model):
     date = models.DateField(default=datetime.date.today)
 
+    def __str__(self):
+        User = get_user_model()
+        owner = User.objects.get(chips_basket=self)
+        return f"User: {str(owner.first_name)}: email: {str(owner.email)}"
+
+
 class BasketItem(models.Model):
-    basket = models.ForeignKey(ChipsBasket, on_delete=models.CASCADE)
+    basket = models.ForeignKey(ChipBasket, on_delete=models.CASCADE)
     product = models.ForeignKey(BaseProduct, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return str(self.product)
+        User = get_user_from_chips_basket(self.basket)
+        return f"{str(User.email)} {self.product.name} {self.quantity}"
+
+def get_user_from_chips_basket(chips_basket):
+    # Ваша логика получения пользователя на основе chips_basket
+    # Возможно, вам потребуется выполнить дополнительные запросы к базе данных или использовать другие данные для определения пользователя
+    return chips_basket.user

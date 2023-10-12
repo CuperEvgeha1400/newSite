@@ -1,26 +1,26 @@
 from django.db import models
 
 
-class ParameterStorage(models.Model):
+class ParameterName(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
-class ValueStorage(models.Model):
-    parameter = models.ForeignKey(ParameterStorage, on_delete=models.CASCADE)
-    value = models.TextField(blank=True)
+class ParameterValue(models.Model):
+    parameter = models.ForeignKey(ParameterName, on_delete=models.CASCADE)
+    value = models.TextField()
 
     def __str__(self):
-        return self.value
+        return f"{self.value} {self.parameter.name}"
 
 
 class BaseProduct(models.Model):
     image = models.ImageField(blank=True, null=True)
-    Model = models.TextField()
+    name = models.CharField(max_length=100)
     ProductDescription = models.TextField()
-    parameters = models.ManyToManyField(ValueStorage, related_name='base_products')
+    parameters = models.ManyToManyField(ParameterValue, related_name='base_products')
     price = models.IntegerField()
 
     def __str__(self):
-        return self.Model
+        return self.name

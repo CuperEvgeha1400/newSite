@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Order, OrderItem, OrderStatus
+from .models import OrderItem, OrderStatus
 
 class OrderStatusSerializer(serializers.Serializer):
     value = serializers.CharField(max_length=50)
@@ -12,9 +12,4 @@ class OrderItemSerializer(serializers.ModelSerializer):
         depth = 2
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    status = OrderStatusSerializer(source='get_status_display', read_only=True)
 
-    class Meta:
-        model = Order
-        fields = '__all__'

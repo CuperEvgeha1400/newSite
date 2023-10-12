@@ -1,16 +1,43 @@
 import django_filters
-from .models import BaseProduct
-from rest_framework import filters
+from .models import ParameterName, ParameterValue, BaseProduct
+from django_filters import rest_framework as filters
+class ParameterNameFilter(django_filters.FilterSet):
+    class Meta:
+        model = ParameterName
+        fields = {
+            'name': ['exact', 'icontains'],
+        }
 
+class ParameterValueFilter(django_filters.FilterSet):
+    class Meta:
+        model = ParameterValue
+        fields = {
+            'parameter__name': ['exact', 'icontains'],
+            'value': ['exact', 'icontains'],
+        }
 
 class BaseProductFilter(django_filters.FilterSet):
     class Meta:
         model = BaseProduct
-        fields = []
+        fields = {
+            'name': ['exact', 'icontains'],
+            'ProductDescription': ['exact', 'icontains'],
+            'parameters__parameter__name': ['exact', 'icontains'],
+            'parameters__value': ['exact', 'icontains'],
+            'price': ['exact', 'lt', 'lte', 'gt', 'gte'],
+        }
 
-    @classmethod
-    def filter_for_field(cls, f, field_name, lookup_expr='exact'):
-        filter_class, params = super().filter_for_field(f, field_name, lookup_expr)
-        if f.is_relation and hasattr(f.related_model, 'baseproduct'):
-            return BaseProductFilter, params
-        return filter_class, params
+class CombinedFilter(filters.FilterSet):
+    parameter_name = ParameterNameFilter()
+    parameter_value = ParameterValueFilter()
+    base_product = BaseProductFilter()
+
+    class Meta:
+        model = BaseProduct
+        fields = {
+            'name': ['exact', 'icontains'],
+            'ProductDescription': ['exact', 'icontains'],
+            'parameters__parameter__name': ['exact', 'icontains'],
+            'parameters__value': ['exact', 'icontains'],
+            'price': ['exact', 'lt', 'lte', 'gt', 'gte'],
+        }
