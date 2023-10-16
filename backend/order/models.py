@@ -42,5 +42,4 @@ class OrderItem(models.Model):
 
     def __str__(self):
         User = get_user_model()
-        owner = User.objects.get(chips_basket=self)
-        return f"{self.pk} {str(owner.email)} {self.total_amount} {self.order_date} "
+        return f"{self.pk} {self.user} {self.total_amount} {self.order_date} "

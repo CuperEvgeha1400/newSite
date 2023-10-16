@@ -2,7 +2,6 @@ import base64
 import json
 import uuid
 import os
-
 import paypalrestsdk
 from backend.settings import REDIRECT_DOMAIN
 import requests
@@ -27,6 +26,7 @@ from rest_framework.views import APIView
 from order.models import OrderItem
 from paypalrestsdk import Webhook, ResourceNotFound
 import logging
+
 logging.basicConfig(level=logging.INFO)
 clientID = os.environ.get("clientID")
 clientSecret = os.environ.get("clientSecret")
@@ -219,19 +219,41 @@ class CreateOrderViewRemote(APIView):
         return Response(response)
 
 
+@api_view(('GET',))
+@permission_classes([IsAuthenticated])
 def check_and_create_order(request):
-    order_id = request.GET.get('order_id')  # Извлеките order_id из query parameters
-    user_id = request.GET.get('user_id')  # Извлеките user_id из query parameters
+    token = request.GET.get('token')  # Извлеките token из query parameters
+    payer_id = request.GET.get('PayerID')  # Извлеките user_id из query parameters
 
-    if order_id and user_id:
-        # Используйте order_id и user_id для создания заказа
-        token = PaypalToken(clientID, clientSecret)
+    if token and payer_id:
+        tokenPaypal = PaypalToken(clientID, clientSecret)
         headers = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + tokenPaypal
         }
-        # Остальной код для проверки статуса и создания заказа
-    else: return Response("я рак ебаный")
+
+        response = requests.get(f'https://api-m.sandbox.paypal.com/v2/checkout/orders/{token}',
+                                headers=headers)
+
+        status_payment = response.json()['status']
+        if status_payment == "APPROVED":
+            total_price = request.user.chips_basket.calculate_total_price()
+            # Используйте order_id и user_id для создания заказа
+            token = PaypalToken(clientID, clientSecret)
+            promo_code = request.GET.get('promo_code', None)
+            order = OrderItem(user=request.user,
+                              order_date=timezone.now(),
+                              total_amount=total_price,
+                              promo_code=promo_code,
+                              user_basket=request.user.chips_basket)
+            order.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            pass
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(('POST',))
 @csrf_exempt
 def paypal_webhook(request):
