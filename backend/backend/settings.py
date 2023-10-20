@@ -47,12 +47,14 @@ INSTALLED_APPS = [
     'account',
     'promocode',
     'payment',
+    'corsheaders'
 ]
 PAYPAL_RECEIVER_EMAIL = 'novapiple228@gmail.com'
 
 AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -151,3 +153,8 @@ EMAIL_USE_SSL = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000',
+]
