@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'drf_spectacular',
     'chipBasket',
     'order',
     'product',
@@ -115,7 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Internationalization
@@ -148,7 +150,13 @@ EMAIL_HOST_PASSWORD = os.environ.get('AUTHEMAIL_EMAIL_HOST_PASSWORD') or 'hiym a
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Чехский сайт API',
+    'DESCRIPTION': 'ура победа',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
