@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from requests import request
 from rest_framework import generics, status
 from rest_framework.decorators import permission_classes, api_view
@@ -29,6 +30,7 @@ def TokenView(request):
     return Response(response)
 
 
+
 class SignupVerify(APIView):
     permission_classes = (AllowAny,)
 
@@ -42,8 +44,7 @@ class SignupVerify(APIView):
                 signup_code.delete()
             except SignupCode.DoesNotExist:
                 pass
-            content = {'success': ('Email address verified.')}
-            return Response(content, status=status.HTTP_200_OK)
+            return render(request, 'authemail/verification_success.html')  # Возвращаем HTML страницу
         else:
             content = {'detail': ('Unable to verify user.')}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
