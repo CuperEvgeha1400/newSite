@@ -7,12 +7,12 @@ from chipBasket.models import ChipBasket
 class User(EmailAbstractUser):
 	# Custom fields
 	adress = models.CharField(max_length=500)
-	first_name = models.CharField(max_length=30, null=True, blank=True)
-	last_name = models.CharField(max_length=30, null=True, blank=True)
-	country = models.CharField(max_length=30, null=True, blank=True)
-	region = models.CharField(max_length=30, null=True, blank=True)
-	city = models.CharField(max_length=30, null=True, blank=True)
-	phone = models.CharField(max_length=30, null=True, blank=True)
+	first_name = models.CharField(max_length=30)
+	last_name = models.CharField(max_length=30)
+	country = models.CharField(max_length=30)
+	region = models.CharField(max_length=30)
+	city = models.CharField(max_length=30)
+	phone = models.CharField(max_length=30)
 	chips_basket = models.OneToOneField(ChipBasket, on_delete=models.CASCADE, null=True)
 	# Required
 	objects = EmailUserManager()

@@ -10,7 +10,7 @@ from authemail.models import SignupCode, EmailChangeCode, PasswordResetCode
 from authemail import wrapper
 
 from .models import User
-from .serializer import MyUserSerializer
+from .serializer import MyUserSerializer, UserInfoSerializer
 
 
 @permission_classes([IsAuthenticated])
@@ -35,7 +35,7 @@ def TokenView(request):
 @api_view(['POST'])
 def create_user(request):
     if request.method == 'POST':
-        serializer = MyUserSerializer(data=request.data)
+        serializer = UserInfoSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
