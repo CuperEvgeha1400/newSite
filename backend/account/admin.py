@@ -6,12 +6,11 @@ from .models import User
 class MyUserAdmin(EmailUserAdmin):
 	fieldsets = (
 		(None, {'fields': ('email', 'password')}),
-		('Personal Info', {'fields': ('first_name', 'last_name')}),
+		('Personal Info', {'fields': ('first_name', 'last_name','country','region','city','adress','phone')}),
 		('Permissions', {'fields': ('is_active', 'is_staff',
 									   'is_superuser', 'is_verified',
 									   'groups', 'user_permissions')}),
 		('Important dates', {'fields': ('last_login', 'date_joined')}),
-		('Custom info', {'fields': ('date_of_birth','adress','chips_basket')}),
 	)
 
 admin.site.unregister(get_user_model())
