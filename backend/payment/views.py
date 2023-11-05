@@ -32,6 +32,9 @@ clientID = os.environ.get("clientID")
 clientSecret = os.environ.get("clientSecret")
 
 
+
+
+
 def increment_promo_usage(promo_code):
     promo = PromoCode.objects.get(code=promo_code)
     promo.increment_used_count()
@@ -250,5 +253,6 @@ def check_and_create_order(request):
             pass
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
 
 

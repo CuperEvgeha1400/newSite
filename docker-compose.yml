@@ -27,7 +27,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - 5050:80
+      - "5050:80"
     depends_on:
       - postgres_db
     networks:
@@ -41,7 +41,7 @@ services:
     volumes:
       - ./backend/:/app
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
       - postgres_db
     env_file:
@@ -56,14 +56,13 @@ services:
   frontend:
     build:
       context: frontend/
-    ports:
-      - 80:80
     depends_on:
       - backend
     restart:
       on-failure
     networks:
       - front_back
+
 
 
 networks:
