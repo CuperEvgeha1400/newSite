@@ -12,7 +12,6 @@ class BaseProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = BaseProduct
         fields = ('id', 'name', 'ProductDescription', 'price', 'parameters')
-        depth = 2
 
     def get_parameters(self, obj):
         # Создаем список параметров в формате ключ-значение (name-value)

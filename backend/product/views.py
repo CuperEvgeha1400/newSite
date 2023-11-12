@@ -26,3 +26,6 @@ class BaseProductListView(generics.ListAPIView):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = CombinedFilter
 
+class BaseProductRetrieveView(generics.RetrieveAPIView):
+    queryset = BaseProduct.objects.all()
+    serializer_class = BaseProductSerializer
