@@ -8,10 +8,19 @@ class ParameterStorageSerializer(serializers.ModelSerializer):
         depth = 2
 
 class BaseProductSerializer(serializers.ModelSerializer):
+    parameters = serializers.SerializerMethodField()
     class Meta:
         model = BaseProduct
-        fields = '__all__'
+        fields = ('id', 'name', 'ProductDescription', 'price', 'parameters')
         depth = 2
+
+    def get_parameters(self, obj):
+        # Создаем список параметров в формате ключ-значение (name-value)
+        parameters = {}
+        for param in obj.parameters.all():
+            parameters[param.parameter.name] = param.value
+
+        return parameters
 
 class ValueStorageSerializer(serializers.ModelSerializer):
     class Meta:
