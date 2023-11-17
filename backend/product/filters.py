@@ -21,11 +21,12 @@ class BaseProductFilter(django_filters.FilterSet):
         model = BaseProduct
         fields = {
             'name': ['exact', 'icontains'],
-            'ProductDescription': ['exact', 'icontains'],
+            'product_description': ['exact', 'icontains'],  # Corrected field name
             'parameters__parameter__name': ['exact', 'icontains'],
             'parameters__value': ['exact', 'icontains'],
             'price': ['exact', 'lt', 'lte', 'gt', 'gte'],
         }
+
 
 class CombinedFilter(filters.FilterSet):
     parameter_name = ParameterNameFilter()
@@ -36,7 +37,7 @@ class CombinedFilter(filters.FilterSet):
         model = BaseProduct
         fields = {
             'name': ['exact', 'icontains'],
-            'ProductDescription': ['exact', 'icontains'],
+            'product_description': ['exact', 'icontains'],
             'parameters__parameter__name': ['exact', 'icontains'],
             'parameters__value': ['exact', 'icontains'],
             'price': ['exact', 'lt', 'lte', 'gt', 'gte'],

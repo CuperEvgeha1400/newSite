@@ -7,3 +7,6 @@ class Review(models.Model):
     content = models.TextField()
     rating = models.PositiveIntegerField()
     product = models.ForeignKey(BaseProduct, on_delete=models.CASCADE, related_name='reviews')
+
+    def __str__(self):
+        return f"{self.author.email} {self.product.name} {self.rating}"

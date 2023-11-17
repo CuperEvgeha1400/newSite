@@ -7,6 +7,7 @@ class ParameterName(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
 class ParameterValue(models.Model):
     parameter = models.ForeignKey(ParameterName, on_delete=models.CASCADE)
     value = models.TextField()
@@ -15,10 +16,16 @@ class ParameterValue(models.Model):
         return f"{self.value} {self.parameter.name}"
 
 
+class BaseProductImage(models.Model):
+    image = models.ImageField(upload_to='base_product_images/')
+
+    def __str__(self):
+        return str(self.image)
+
 class BaseProduct(models.Model):
-    image = models.ImageField(blank=True, null=True)
+    image = models.ManyToManyField(BaseProductImage, related_name='base_products')
     name = models.CharField(max_length=100)
-    ProductDescription = models.TextField()
+    product_description = models.TextField()
     parameters = models.ManyToManyField(ParameterValue, related_name='base_products')
     price = models.IntegerField()
 

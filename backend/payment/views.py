@@ -1,30 +1,19 @@
 import base64
-import json
-import uuid
 import os
-import paypalrestsdk
 from backend.settings import REDIRECT_DOMAIN
 import requests
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import ValidationError
 from rest_framework import status
 from django.utils import timezone
 from chipBasket.models import BasketItem
-from product.models import BaseProduct
 from promocode.models import PromoCode
 import stripe
-import time
-from account.models import User
-from django.shortcuts import reverse
-from rest_framework.decorators import api_view, permission_classes, renderer_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from django.conf import settings
 from rest_framework.views import APIView
 from order.models import OrderItem
-from paypalrestsdk import Webhook, ResourceNotFound
 import logging
 
 logging.basicConfig(level=logging.INFO)

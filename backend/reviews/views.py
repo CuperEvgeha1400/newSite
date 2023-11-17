@@ -5,6 +5,14 @@ from .models import Review
 from .serializers import ReviewSerializer
 
 
+
+class CreateReviewView(generics.CreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 class ReviewListCreateView(generics.ListAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
