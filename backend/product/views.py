@@ -26,9 +26,6 @@ class BaseProductListView(generics.ListAPIView):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = CombinedFilter
 
-    def get_queryset(self):
-        base_product_id = self.kwargs['base_product_id']
-        return BaseProductImage.objects.filter(base_product_id=base_product_id)
 
 class BaseProductRetrieveView(generics.RetrieveAPIView):
     queryset = BaseProduct.objects.all()
