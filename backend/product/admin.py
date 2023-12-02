@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import BaseProduct, ParameterStorage,ValueStorage
+from .models import BaseProduct, ParameterName,ParameterValue, BaseProductImage
 # Register your models here.
+
+
+
 admin.site.register(BaseProduct)
-admin.site.register(ParameterStorage)
-admin.site.register(ValueStorage)
+admin.site.register(BaseProductImage)
+admin.site.register(ParameterValue)
+admin.site.register(ParameterName)

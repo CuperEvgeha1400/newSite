@@ -15,6 +15,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_URL = '/base_product_images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'base_product_images')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -26,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+PAYPAL_TEST = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -35,11 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'RegisterLogin',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'ChipBasket',
+    'drf_spectacular',
+    'chipBasket',
     'order',
     'product',
     'reviews',
@@ -47,13 +51,14 @@ INSTALLED_APPS = [
     'account',
     'promocode',
     'payment',
+    'corsheaders'
 ]
+PAYPAL_RECEIVER_EMAIL = 'novapiple228@gmail.com'
 
-STRIPE_SECRET_KEY_TEST = os.getenv("STRIPE_SECRET_KEY_TEST")
-
-AUTH_USER_MODEL = 'account.MyUser'
+AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,7 +73,9 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'account/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,11 +95,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASS"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT")
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -114,7 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Internationalization
@@ -137,4 +148,29 @@ STATIC_URL += '/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+EMAIL_FROM = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_FROM') or 'novapiple228@gmail.com'
+EMAIL_BCC = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_BCC') or 'novapiple228@gmail.com'
+
+EMAIL_HOST = os.environ.get('AUTHEMAIL_EMAIL_HOST') or 'smtp.gmail.com'
+EMAIL_PORT = os.environ.get('AUTHEMAIL_EMAIL_PORT') or 587
+EMAIL_HOST_USER = os.environ.get('AUTHEMAIL_EMAIL_HOST_USER') or 'novapiple228@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('AUTHEMAIL_EMAIL_HOST_PASSWORD') or 'hiym azto ehqc spfk '
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Чехский сайт API',
+    'DESCRIPTION': 'ура победа',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000',
+]

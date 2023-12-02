@@ -1,12 +1,19 @@
 from django.db import models
 from authemail.models import EmailUserManager, EmailAbstractUser
 
-from ChipBasket.models import ChipsBasket
+from chipBasket.models import ChipBasket
 
 
-class MyUser(EmailAbstractUser):
+class User(EmailAbstractUser):
 	# Custom fields
-	date_of_birth = models.DateField('Date of birth', null=True, blank=True)
-	chips_basket = models.OneToOneField(ChipsBasket, on_delete=models.CASCADE, null=True)
+	adress = models.CharField(max_length=500)
+	first_name = models.CharField(max_length=30)
+	last_name = models.CharField(max_length=30)
+	country = models.CharField(max_length=30)
+	region = models.CharField(max_length=30)
+	city = models.CharField(max_length=30)
+	phone = models.CharField(max_length=30)
+	chips_basket = models.OneToOneField(ChipBasket, on_delete=models.CASCADE, null=True)
 	# Required
 	objects = EmailUserManager()
+
