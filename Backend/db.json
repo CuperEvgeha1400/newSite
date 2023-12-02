@@ -1,0 +1,782 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "title": "json-server",
+      "userId": "2"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "test1 comment",
+      "goodsId": "1",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "body": "test2 comment",
+      "goodsId": "1",
+      "userId": "1"
+    },
+    {
+      "id": "3",
+      "body": "test3 comment",
+      "goodsId": "1",
+      "userId": "1"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@admin.com",
+      "password": "admin"
+    },
+    {
+      "id": "2",
+      "name": "Admin2",
+      "email": "admin2@admin.com",
+      "password": "admin"
+    }
+  ],
+  "profile": [
+    {
+      "lastname": "Admin",
+      "name": "Admin",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "lastname": "Admin2",
+      "name": "Admin2"
+    }
+  ],
+  "goods": [
+    {
+      "id": "1",
+      "model": "SUN 78MD-HFS",
+      "Characteristic": {
+        "Ratedpower": "201w",
+        "Voc": "23V",
+        "Isc": "43A",
+        "Vmp": "23V",
+        "Imp": "12A",
+        "Účinnost": "20%",
+        "Tolerance": "0-+5W",
+        "Maximální": "1500V DC",
+        "Tlak": "2400mpa/5400mpa"
+      },
+      "Structure": {
+        "Rozměr": "1065mm*1045mm",
+        "Tloušťka": "3mm",
+        "Weight": "3.8kg",
+        "Článek": "Mono166*166mm, 36ks (6*6)",
+        "Propojovací": "IP68 (3 bypassové diody), konektory kompatibilní s MC4",
+        "Konektor": "44,0 mm² (IEC) Délka vodiče: (+)250 mm,\n(-)350mm, délku vodiče lze upravit na míru"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "2",
+      "model": "SUN 78WD-HFU28",
+      "Characteristic": {
+        "Ratedpower": "205w",
+        "Voc": "26V",
+        "Isc": "44A",
+        "Vmp": "25V",
+        "Imp": "10A",
+        "Účinnost": "23%",
+        "Tolerance": "2-+8W",
+        "Maximální": "1510V DC",
+        "Tlak": "2420mpa/5370mpa"
+      },
+      "Structure": {
+        "Rozměr": "1080mm1030mm",
+        "Tloušťka": "5mm",
+        "Weight": "3.5kg",
+        "Článek": "Mono164164mm, 34ks (4*8)",
+        "Propojovací": "IP70 (5 bypassové diody), konektory kompatibilní s MC6",
+        "Konektor": "45,0 mm² (IEC) Délka vodiče: (+)270 mm,\n(-)340mm, délku vodiče lze upravit na míru"
+      },
+      "type": "material"
+    },
+    {
+      "id": "3",
+      "model": "NUS 78VD-HFT27",
+      "Characteristic": {
+        "Ratedpower": "210w",
+        "Voc": "27V",
+        "Isc": "45A",
+        "Vmp": "26V",
+        "Imp": "9A",
+        "Účinnost": "24%",
+        "Tolerance": "3-+9W",
+        "Maximální": "1515V DC",
+        "Tlak": "2425mpa/5365mpa"
+      },
+      "Structure": {
+        "Rozměr": "1085mm1025mm",
+        "Tloušťka": "6mm",
+        "Weight": "3.4kg",
+        "Článek": "Mono163163mm, 33ks (3*11)",
+        "Propojovací": "IP71 (6 bypassové diody), konektory kompatibilní s MC7",
+        "Konektor": "46,0 mm² (IEC) Délka vodiče: (+)280 mm,\n(-)330mm, délku vodiče lze upravit na míru"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "4",
+      "model": "SNU 78UD-HFS26",
+      "Characteristic": {
+        "Ratedpower": "198w",
+        "Voc": "28V",
+        "Isc": "46A",
+        "Vmp": "27V",
+        "Imp": "8A",
+        "Účinnost": "25%",
+        "Tolerance": "4-+10W",
+        "Maximální": "1518V DC",
+        "Tlak": "2428mpa/5368mpa"
+      },
+      "Structure": {
+        "Rozměr": "1090mm1020mm",
+        "Tloušťka": "7mm",
+        "Weight": "3.3kg",
+        "Článek": "Mono162162mm, 32ks (2*16)",
+        "Propojovací": "IP72 (7 bypassové diody), konektory kompatibilní s MC8",
+        "Konektor": "47,0 mm² (IEC) Délka vodiče: (+)290 mm,\n(-)320mm, délku vodiče lze upravit na míru"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "5",
+      "model": "SUN 78TD-HFR25",
+      "Characteristic": {
+        "Ratedpower": "212w",
+        "Voc": "30V",
+        "Isc": "48A",
+        "Vmp": "29V",
+        "Imp": "7A",
+        "Účinnost": "27%",
+        "Tolerance": "6-+12W",
+        "Maximální": "1520V DC",
+        "Tlak": "2430mpa/5350mpa"
+      },
+      "Structure": {
+        "Rozměr": "1095mm1015mm",
+        "Tloušťka": "8mm",
+        "Weight": "3.2kg",
+        "Článek": "Mono160160mm, 30ks (5*6)",
+        "Propojovací": "IP74 (9 bypassové diody), konektory kompatibilní s MC10",
+        "Konektor": "48,0 mm² (IEC) Délka vodiče: (+)300 mm,\n(-)310mm, délku vodiče lze upravit na míru"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "6",
+      "model": "NUR 78SD-HFQ24",
+      "Characteristic": {
+        "Ratedpower": "215w",
+        "Voc": "31V",
+        "Isc": "49A",
+        "Vmp": "28V",
+        "Imp": "6A",
+        "Účinnost": "28%",
+        "Tolerance": "7-+13W",
+        "Maximální": "1525V DC",
+        "Tlak": "2435mpa/5345mpa"
+      },
+      "Structure": {
+        "Rozměr": "1100mm1010mm",
+        "Tloušťka": "9mm",
+        "Weight": "3.1kg",
+        "Článek": "Mono159159mm, 29ks (4*9)",
+        "Propojovací": "IP76 (8 bypassové diody), konektory kompatibilní s MC12",
+        "Konektor": "49,0 mm² (IEC) Délka vodiče: (+)310 mm,\n(-)300mm, délku vodiče lze upravit na míru"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "7",
+      "model": "SNU 78RD-HFP23",
+      "Characteristic": {
+        "Ratedpower": "208w",
+        "Voc": "32V",
+        "Isc": "50A",
+        "Vmp": "27V",
+        "Imp": "5A",
+        "Účinnost": "29%",
+        "Tolerance": "8-+14W",
+        "Maximální": "1530V DC",
+        "Tlak": "2440mpa/5340mpa"
+      },
+      "Structure": {
+        "Rozměr": "1105mm1005mm",
+        "Tloušťka": "10mm",
+        "Weight": "3.0kg",
+        "Článek": "Mono158158mm, 28ks (3*10)",
+        "Propojovací": "IP78 (7 bypassové diody), konektory kompatibilní s MC14",
+        "Konektor": "50,0 mm² (IEC) Délka vodiče: (+)320 mm,\n(-)290mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "8",
+      "model": "SUN 78QD-HFO22",
+      "Characteristic": {
+        "Ratedpower": "218w",
+        "Voc": "34V",
+        "Isc": "52A",
+        "Vmp": "30V",
+        "Imp": "4A",
+        "Účinnost": "31%",
+        "Tolerance": "10-+16W",
+        "Maximální": "1535V DC",
+        "Tlak": "2445mpa/5335mpa"
+      },
+      "Structure": {
+        "Rozměr": "1110mm1000mm",
+        "Tloušťka": "11mm",
+        "Weight": "2.9kg",
+        "Článek": "Mono157157mm, 27ks (2*13)",
+        "Propojovací": "IP80 (10 bypassové diody), konektory kompatibilní s MC16",
+        "Konektor": "51,0 mm² (IEC) Délka vodiče: (+)330 mm,\n(-)280mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "9",
+      "model": "USN 78PD-HFN21",
+      "Characteristic": {
+        "Ratedpower": "221w",
+        "Voc": "35V",
+        "Isc": "53A",
+        "Vmp": "31V",
+        "Imp": "3A",
+        "Účinnost": "32%",
+        "Tolerance": "11-+17W",
+        "Maximální": "1540V DC",
+        "Tlak": "2450mpa/5325mpa"
+      },
+      "Structure": {
+        "Rozměr": "1115mm995mm",
+        "Tloušťka": "12mm",
+        "Weight": "2.8kg",
+        "Článek": "Mono156156mm, 26ks (1*14)",
+        "Propojovací": "IP82 (11 bypassové diody), konektory kompatibilní s MC18",
+        "Konektor": "52,0 mm² (IEC) Délka vodiče: (+)340 mm,\n(-)270mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "10",
+      "model": "NSU 78OD-HFM20",
+      "Characteristic": {
+        "Ratedpower": "224w",
+        "Voc": "36V",
+        "Isc": "54A",
+        "Vmp": "32V",
+        "Imp": "2A",
+        "Účinnost": "33%",
+        "Tolerance": "12-+18W",
+        "Maximální": "1545V DC",
+        "Tlak": "2455mpa/5315mpa"
+      },
+      "Structure": {
+        "Rozměr": "1120mm990mm",
+        "Tloušťka": "13mm",
+        "Weight": "2.7kg",
+        "Článek": "Mono155155mm, 25ks (15*1)",
+        "Propojovací": "IP84 (12 bypassové diody), konektory kompatibilní s MC20",
+        "Konektor": "53,0 mm² (IEC) Délka vodiče: (+)350 mm,\n(-)260mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "11",
+      "model": "SUN 78ND-HFL19",
+      "Characteristic": {
+        "Ratedpower": "227w",
+        "Voc": "37V",
+        "Isc": "55A",
+        "Vmp": "33V",
+        "Imp": "1A",
+        "Účinnost": "34%",
+        "Tolerance": "13-+19W",
+        "Maximální": "1550V DC",
+        "Tlak": "2460mpa/5310mpa"
+      },
+      "Structure": {
+        "Rozměr": "1125mm985mm",
+        "Tloušťka": "14mm",
+        "Weight": "2.6kg",
+        "Článek": "Mono154154mm, 24ks (16*1)",
+        "Propojovací": "IP86 (13 bypassové diody), konektory kompatibilní s MC22",
+        "Konektor": "54,0 mm² (IEC) Délka vodiče: (+)360 mm,\n(-)250mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "12",
+      "model": "NSL 78VD-HFK18",
+      "Characteristic": {
+        "Ratedpower": "230w",
+        "Voc": "38V",
+        "Isc": "56A",
+        "Vmp": "34V",
+        "Imp": "2A",
+        "Účinnost": "35%",
+        "Tolerance": "14-+20W",
+        "Maximální": "1555V DC",
+        "Tlak": "2465mpa/5305mpa"
+      },
+      "Structure": {
+        "Rozměr": "1130mm980mm",
+        "Tloušťka": "15mm",
+        "Weight": "2.5kg",
+        "Článek": "Mono153153mm, 23ks (17*1)",
+        "Propojovací": "IP88 (14 bypassové diody), konektory kompatibilní s MC24",
+        "Konektor": "55,0 mm² (IEC) Délka vodiče: (+)370 mm,\n(-)240mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "13",
+      "model": "SNU 78LD-HFJ17",
+      "Characteristic": {
+        "Ratedpower": "233w",
+        "Voc": "39V",
+        "Isc": "57A",
+        "Vmp": "35V",
+        "Imp": "3A",
+        "Účinnost": "36%",
+        "Tolerance": "15-+21W",
+        "Maximální": "1560V DC",
+        "Tlak": "2470mpa/5300mpa"
+      },
+      "Structure": {
+        "Rozměr": "1135mm975mm",
+        "Tloušťka": "16mm",
+        "Weight": "2.4kg",
+        "Článek": "Mono152152mm, 22ks (18*1)",
+        "Propojovací": "IP90 (15 bypassové diody), konektory kompatibilní s MC26",
+        "Konektor": "56,0 mm² (IEC) Délka vodiče: (+)380 mm,\n(-)230mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "kabel"
+    },
+    {
+      "id": "14",
+      "model": "SUN 78KD-HFI16",
+      "Characteristic": {
+        "Ratedpower": "236w",
+        "Voc": "40V",
+        "Isc": "58A",
+        "Vmp": "36V",
+        "Imp": "4A",
+        "Účinnost": "37%",
+        "Tolerance": "16-+22W",
+        "Maximální": "1565V DC",
+        "Tlak": "2475mpa/5295mpa"
+      },
+      "Structure": {
+        "Rozměr": "1140mm970mm",
+        "Tloušťka": "17mm",
+        "Weight": "2.3kg",
+        "Článek": "Mono151151mm, 21ks (19*1)",
+        "Propojovací": "IP92 (16 bypassové diody), konektory kompatibilní s MC28",
+        "Konektor": "57,0 mm² (IEC) Délka vodiče: (+)390 mm,\n(-)220mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "panel"
+    },
+    {
+      "id": "15",
+      "model": "USN 78RD-HFH15",
+      "Characteristic": {
+        "Ratedpower": "239w",
+        "Voc": "41V",
+        "Isc": "59A",
+        "Vmp": "37V",
+        "Imp": "5A",
+        "Účinnost": "38%",
+        "Tolerance": "17-+23W",
+        "Maximální": "1570V DC",
+        "Tlak": "2480mpa/5290mpa"
+      },
+      "Structure": {
+        "Rozměr": "1145mm965mm",
+        "Tloušťka": "18mm",
+        "Weight": "2.2kg",
+        "Článek": "Mono150150mm, 20ks (20*1)",
+        "Propojovací": "IP94 (17 bypassové diody), konektory kompatibilní s MC30",
+        "Konektor": "58,0 mm² (IEC) Délka vodiče: (+)400 mm,\n(-)210mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "kabel"
+    },
+    {
+      "id": "16",
+      "model": "NSU 78YD-HFG14",
+      "Characteristic": {
+        "Ratedpower": "242w",
+        "Voc": "42V",
+        "Isc": "60A",
+        "Vmp": "38V",
+        "Imp": "6A",
+        "Účinnost": "39%",
+        "Tolerance": "18-+24W",
+        "Maximální": "1575V DC",
+        "Tlak": "2485mpa/5285mpa"
+      },
+      "Structure": {
+        "Rozměr": "1150mm960mm",
+        "Tloušťka": "19mm",
+        "Weight": "2.1kg",
+        "Článek": "Mono149149mm, 19ks (21*1)",
+        "Propojovací": "IP96 (18 bypassové diody), konektory kompatibilní s MC32",
+        "Konektor": "59,0 mm² (IEC) Délka vodiče: (+)410 mm,\n(-)200mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "kabel"
+    },
+    {
+      "id": "17",
+      "model": "SUN 73KE-HFS",
+      "Characteristic": {
+        "Ratedpower": "245w",
+        "Voc": "43V",
+        "Isc": "61A",
+        "Vmp": "39V",
+        "Imp": "7A",
+        "Účinnost": "40%",
+        "Tolerance": "19-+25W",
+        "Maximální": "1580V DC",
+        "Tlak": "2490mpa/5280mpa"
+      },
+      "Structure": {
+        "Rozměr": "1155mm955mm",
+        "Tloušťka": "20mm",
+        "Weight": "2.0kg",
+        "Článek": "Mono148148mm, 18ks (22*1)",
+        "Propojovací": "IP98 (19 bypassové diody), konektory kompatibilní s MC34",
+        "Konektor": "60,0 mm² (IEC) Délka vodiče: (+)420 mm,\n(-)190mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "material"
+    },
+    {
+      "id": "18",
+      "model": "SNJ 78XD-HFF13",
+      "Characteristic": {
+        "Ratedpower": "248w",
+        "Voc": "44V",
+        "Isc": "62A",
+        "Vmp": "40V",
+        "Imp": "8A",
+        "Účinnost": "41%",
+        "Tolerance": "20-+26W",
+        "Maximální": "1585V DC",
+        "Tlak": "2495mpa/5275mpa"
+      },
+      "Structure": {
+        "Rozměr": "1160mm950mm",
+        "Tloušťka": "21mm",
+        "Weight": "1.9kg",
+        "Článek": "Mono147147mm, 17ks (23*1)",
+        "Propojovací": "IP100 (20 bypassové diody), konektory kompatibilní s MC36",
+        "Konektor": "61,0 mm² (IEC) Délka vodiče: (+)430 mm,\n(-)180mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "kabel"
+    },
+    {
+      "id": "19",
+      "model": "SUN 78JD-HFE12",
+      "Characteristic": {
+        "Ratedpower": "251w",
+        "Voc": "45V",
+        "Isc": "63A",
+        "Vmp": "41V",
+        "Imp": "9A",
+        "Účinnost": "42%",
+        "Tolerance": "21-+27W",
+        "Maximální": "1590V DC",
+        "Tlak": "2500mpa/5270mpa"
+      },
+      "Structure": {
+        "Rozměr": "1165mm945mm",
+        "Tloušťka": "22mm",
+        "Weight": "1.8kg",
+        "Článek": "Mono146146mm, 16ks (24*1)",
+        "Propojovací": "IP102 (21 bypassové diody), konektory kompatibilní s MC38",
+        "Konektor": "62,0 mm² (IEC) Délka vodiče: (+)440 mm,\n(-)170mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "batarie"
+    },
+    {
+      "id": "20",
+      "model": "NUS 78IF-HFD11",
+      "Characteristic": {
+        "Ratedpower": "254w",
+        "Voc": "46V",
+        "Isc": "64A",
+        "Vmp": "42V",
+        "Imp": "10A",
+        "Účinnost": "43%",
+        "Tolerance": "22-+28W",
+        "Maximální": "1595V DC",
+        "Tlak": "2505mpa/5265mpa"
+      },
+      "Structure": {
+        "Rozměr": "1170mm940mm",
+        "Tloušťka": "23mm",
+        "Weight": "1.7kg",
+        "Článek": "Mono145145mm, 15ks (25*1)",
+        "Propojovací": "IP104 (22 bypassové diody), konektory kompatibilní s MC40",
+        "Konektor": "63,0 mm² (IEC) Délka vodiče: (+)450 mm,\n(-)160mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "kabel"
+    },
+    {
+      "id": "21",
+      "model": "FSN 78HU-HFC10",
+      "Characteristic": {
+        "Ratedpower": "257w",
+        "Voc": "47V",
+        "Isc": "65A",
+        "Vmp": "43V",
+        "Imp": "11A",
+        "Účinnost": "44%",
+        "Tolerance": "23-+29W",
+        "Maximální": "1600V DC",
+        "Tlak": "2510mpa/5260mpa"
+      },
+      "Structure": {
+        "Rozměr": "1175mm935mm",
+        "Tloušťka": "24mm",
+        "Weight": "1.6kg",
+        "Článek": "Mono144144mm, 14ks (26*1)",
+        "Propojovací": "IP106 (23 bypassové diody), konektory kompatibilní s MC42",
+        "Konektor": "64,0 mm² (IEC) Délka vodiče: (+)460 mm,\n(-)150mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "converter"
+    },
+    {
+      "id": "22",
+      "model": "HNS 78UF-HFB9",
+      "Characteristic": {
+        "Ratedpower": "260w",
+        "Voc": "48V",
+        "Isc": "66A",
+        "Vmp": "44V",
+        "Imp": "12A",
+        "Účinnost": "45%",
+        "Tolerance": "24-+30W",
+        "Maximální": "1605V DC",
+        "Tlak": "2515mpa/5255mpa"
+      },
+      "Structure": {
+        "Rozměr": "1180mm930mm",
+        "Tloušťka": "25mm",
+        "Weight": "1.5kg",
+        "Článek": "Mono143143mm, 13ks (27*1)",
+        "Propojovací": "IP108 (24 bypassové diody), konektory kompatibilní s MC44",
+        "Konektor": "65,0 mm² (IEC) Délka vodiče: (+)470 mm,\n(-)140mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "batarie"
+    },
+    {
+      "id": "23",
+      "model": "SNU 78SD-HFA8",
+      "Characteristic": {
+        "Ratedpower": "263w",
+        "Voc": "49V",
+        "Isc": "67A",
+        "Vmp": "45V",
+        "Imp": "13A",
+        "Účinnost": "46%",
+        "Tolerance": "25-+31W",
+        "Maximální": "1610V DC",
+        "Tlak": "2520mpa/5250mpa"
+      },
+      "Structure": {
+        "Rozměr": "1185mm925mm",
+        "Tloušťka": "26mm",
+        "Weight": "1.4kg",
+        "Článek": "Mono142142mm, 12ks (28*1)",
+        "Propojovací": "IP110 (25 bypassové diody), konektory kompatibilní s MC46",
+        "Konektor": "66,0 mm² (IEC) Délka vodiče: (+)480 mm,\n(-)130mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "converter"
+    },
+    {
+      "id": "24",
+      "model": "UNS 78MH-HFZ7",
+      "Characteristic": {
+        "Ratedpower": "266w",
+        "Voc": "50V",
+        "Isc": "68A",
+        "Vmp": "46V",
+        "Imp": "14A",
+        "Účinnost": "47%",
+        "Tolerance": "26-+32W",
+        "Maximální": "1615V DC",
+        "Tlak": "2525mpa/5245mpa"
+      },
+      "Structure": {
+        "Rozměr": "1190mm920mm",
+        "Tloušťka": "27mm",
+        "Weight": "1.3kg",
+        "Článek": "Mono141141mm, 11ks (29*1)",
+        "Propojovací": "IP112 (26 bypassové diody), konektory kompatibilní s MC48",
+        "Konektor": "67,0 mm² (IEC) Délka vodiče: (+)490 mm,\n(-)120mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "converter"
+    },
+    {
+      "id": "25",
+      "model": "NSH 78DM-HFY6",
+      "Characteristic": {
+        "Ratedpower": "269w",
+        "Voc": "51V",
+        "Isc": "69A",
+        "Vmp": "47V",
+        "Imp": "15A",
+        "Účinnost": "48%",
+        "Tolerance": "27-+33W",
+        "Maximální": "1620V DC",
+        "Tlak": "2530mpa/5240mpa"
+      },
+      "Structure": {
+        "Rozměr": "1195mm915mm",
+        "Tloušťka": "28mm",
+        "Weight": "1.2kg",
+        "Článek": "Mono140140mm, 10ks (30*1)",
+        "Propojovací": "IP114 (27 bypassové diody), konektory kompatibilní s MC50",
+        "Konektor": "68,0 mm² (IEC) Délka vodiče: (+)500 mm,\n(-)110mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "converter"
+    },
+    {
+      "id": "26",
+      "model": "NSU 78DM-HFX5",
+      "Characteristic": {
+        "Ratedpower": "272w",
+        "Voc": "52V",
+        "Isc": "70A",
+        "Vmp": "48V",
+        "Imp": "16A",
+        "Účinnost": "49%",
+        "Tolerance": "28-+34W",
+        "Maximální": "1625V DC",
+        "Tlak": "2535mpa/5235mpa"
+      },
+      "Structure": {
+        "Rozměr": "1200mm910mm",
+        "Tloušťka": "29mm",
+        "Weight": "1.1kg",
+        "Článek": "Mono139139mm, 9ks (31*1)",
+        "Propojovací": "IP116 (28 bypassové diody), konektory kompatibilní s MC52",
+        "Konektor": "69,0 mm² (IEC) Délka vodiče: (+)510 mm,\n(-)100mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "batarie"
+    },
+    {
+      "id": "27",
+      "model": "SNH 78ME-HFW4",
+      "Characteristic": {
+        "Ratedpower": "275w",
+        "Voc": "53V",
+        "Isc": "71A",
+        "Vmp": "49V",
+        "Imp": "17A",
+        "Účinnost": "50%",
+        "Tolerance": "29-+35W",
+        "Maximální": "1630V DC",
+        "Tlak": "2540mpa/5230mpa"
+      },
+      "Structure": {
+        "Rozměr": "1205mm905mm",
+        "Tloušťka": "30mm",
+        "Weight": "1.0kg",
+        "Článek": "Mono138138mm, 8ks (32*1)",
+        "Propojovací": "IP118 (29 bypassové diody), konektory kompatibilní s MC54",
+        "Konektor": "70,0 mm² (IEC) Délka vodiče: (+)520 mm,\n(-)90mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "converter"
+    },
+    {
+      "id": "28",
+      "model": "UNS 78SD-HFV3",
+      "Characteristic": {
+        "Ratedpower": "278w",
+        "Voc": "54V",
+        "Isc": "72A",
+        "Vmp": "50V",
+        "Imp": "18A",
+        "Účinnost": "51%",
+        "Tolerance": "30-+36W",
+        "Maximální": "1635V DC",
+        "Tlak": "2545mpa/5225mpa"
+      },
+      "Structure": {
+        "Rozměr": "1210mm900mm",
+        "Tloušťka": "31mm",
+        "Weight": "0.9kg",
+        "Článek": "Mono137137mm, 7ks (33*1)",
+        "Propojovací": "IP120 (30 bypassové diody), konektory kompatibilní s MC56",
+        "Konektor": "71,0 mm² (IEC) Délka vodiče: (+)530 mm,\n(-)80mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "converter"
+    },
+    {
+      "id": "29",
+      "model": "SNU 78MD-HFU2",
+      "Characteristic": {
+        "Ratedpower": "281w",
+        "Voc": "55V",
+        "Isc": "73A",
+        "Vmp": "51V",
+        "Imp": "19A",
+        "Účinnost": "52%",
+        "Tolerance": "31-+37W",
+        "Maximální": "1640V DC",
+        "Tlak": "2550mpa/5220mpa"
+      },
+      "Structure": {
+        "Rozměr": "1215mm895mm",
+        "Tloušťka": "32mm",
+        "Weight": "0.8kg",
+        "Článek": "Mono136136mm, 6ks (34*1)",
+        "Propojovací": "IP122 (31 bypassové diody), konektory kompatibilní s MC58",
+        "Konektor": "72,0 mm² (IEC) Délka vodiče: (+)540 mm,\n(-)70mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "batarie"
+    },
+    {
+      "id": "30",
+      "model": "SUN 78MD-HFS1",
+      "Characteristic": {
+        "Ratedpower": "284w",
+        "Voc": "56V",
+        "Isc": "74A",
+        "Vmp": "52V",
+        "Imp": "20A",
+        "Účinnost": "53%",
+        "Tolerance": "32-+38W",
+        "Maximální": "1645V DC",
+        "Tlak": "2555mpa/5215mpa"
+      },
+      "Structure": {
+        "Rozměr": "1220mm890mm",
+        "Tloušťka": "33mm",
+        "Weight": "0.7kg",
+        "Článek": "Mono135135mm, 5ks (35*1)",
+        "Propojovací": "IP124 (32 bypassové diody), konektory kompatibilní s MC60",
+        "Konektor": "73,0 mm² (IEC) Délka vodiče: (+)550 mm,\n(-)60mm, délku vodiče lze upravit на ммм"
+      },
+      "type": "batarie"
+    }
+  ]
+}

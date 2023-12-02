@@ -1,0 +1,16 @@
+{
+  "name": "solopharma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "eslint.experimental.useFlatConfig": true,
+  "scripts": {
+    "start:json": "node ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
