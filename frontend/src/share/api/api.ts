@@ -2,7 +2,7 @@ import axios, { type AxiosInstance } from 'axios'
 import Cookies from 'js-cookie'
 import { TOKEN_COOKIES } from 'share/const/localstorage'
 
-const BaseURL = '45.147.248.21:8000/api/'
+const BaseURL = 'api/'
 
 export class API {
     constructor () {
