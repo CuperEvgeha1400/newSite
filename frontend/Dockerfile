@@ -1,15 +1,14 @@
 FROM node:18.16-alpine as builder
 
-WORKDIR /usr/src/app
-
-COPY ./package.json .
-COPY ./package-lock.json .
+WORKDIR /frontend
 
 COPY . .
 
 RUN npm install -g npm@8.12.1
 
-RUN export NODE_OPTIONS=--max-old-space-size=9000
+RUN export NODE_OPTIONS=--max-old-space-size=900
+
+RUN export BUILD_PATH='/frontend/dist'
 
 RUN npm install
 

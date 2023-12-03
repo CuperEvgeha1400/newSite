@@ -17,15 +17,12 @@ services:
       - envs/database.env
     restart:
       on-failure
-    networks:
-      - pgdb
-
 
   backend:
     container_name: backend
     build:
       context: backend/
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000 -w 2
+    command: bash -c "python /app/manage.py makemigrations && python /app/manage.py migrate --noinput && gunicorn backend.wsgi:application --bind 0.0.0.0:8000 -w 2"
     volumes:
       - ./backend/:/app
     ports:
@@ -37,9 +34,6 @@ services:
       - envs/backend.env
     restart:
       on-failure
-    networks:
-      - pgdb
-      - front_back
 
   frontend:
     build:
@@ -48,12 +42,10 @@ services:
       - 3000:3000
     depends_on:
       - backend
-    networks:
-      - front_back
-    volumes:
-      - ./frontend/:/frontend
     restart:
       on-failure
+    volumes:
+     - frontend:/frontend
 
   nginx:
     container_name: nginx
@@ -63,15 +55,12 @@ services:
     ports:
       - 80:80
     volumes:
-      - static:/usr/src/app/static
+      - frontend:/frontend
     depends_on:
       - frontend
 
-networks:
-  pgdb:
-  front_back:
-
-
 volumes:
   static:
+    external: false
+  frontend:
     external: false
