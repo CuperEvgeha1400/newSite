@@ -20,18 +20,6 @@ services:
     networks:
       - pgdb
 
-  pgadmin:
-    container_name: pgadmin4
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres_db
-    networks:
-      - pgdb
 
   backend:
     container_name: backend
@@ -56,13 +44,16 @@ services:
   frontend:
     build:
       context: frontend/
+    ports:
+      - 3000:3000
     depends_on:
       - backend
-    restart:
-      on-failure
     networks:
       - front_back
-
+    volumes:
+      - ./frontend/:/frontend
+    restart:
+      on-failure
 
 
 networks:
