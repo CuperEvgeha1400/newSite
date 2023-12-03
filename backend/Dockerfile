@@ -1,9 +1,20 @@
-FROM python:3.10
+FROM python:3.8.3-slim-buster
 
+# set work directory
+WORKDIR /usr/src/app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /app
-WORKDIR /app
-ADD . /app
 
+# install dependencies
+COPY ./requirements.txt .
+RUN pip install --no-cache --upgrade pip
+RUN pip install -r requirements.txt
+RUN pip install --no-cache gunicorn
 
-RUN pip install -r reqirements.txt
+# copy django project
+COPY . .
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
